@@ -103,7 +103,7 @@ MECH_FILES = {
     'HCP_clf'            : 'HCP_classifier.joblib',
     'IM_clf'             : 'IM_classifier.joblib',
 }
-DB_FILE = 'MPEAs_Mech_Corr_DB_updated.xlsx'
+DB_FILE = 'Updated_MPEAs_Mech_CorrGAN_DB_processed.xlsx'
 
 # ── Empirical parameter lookup tables ─────────────────────────────────────────
 ATOMIC_RADII   = {'Ag':1.44,'Al':1.43,'B':0.87,'C':0.77,'Ca':1.97,'Co':1.25,'Cr':1.28,'Cu':1.28,'Fe':1.26,'Ga':1.22,'Ge':1.22,'Hf':1.59,'Li':1.52,'Mg':1.60,'Mn':1.26,'Mo':1.36,'N':0.75,'Nb':1.43,'Nd':1.82,'Ni':1.24,'Pd':1.37,'Re':1.37,'Sc':1.62,'Si':1.18,'Sn':1.40,'Ta':1.43,'Ti':1.47,'V':1.34,'W':1.37,'Y':1.80,'Zn':1.33,'Zr':1.60}
@@ -214,7 +214,7 @@ def load_corr_models(pipeline):
 
 @st.cache_data
 def load_dataset_bounds():
-    df = pd.read_excel(DB_FILE)
+    df = pd.read_excel(DB_FILE, sheet_name='mechanical')
     ELEM_COLS    = ELEMENTS
     PROCESS_COLS = ['process_1','process_2','process_3','process_4',
                     'process_5','process_6','process_7']
