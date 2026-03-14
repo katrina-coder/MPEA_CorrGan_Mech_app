@@ -24,8 +24,9 @@ Feature vector (66-dim):
   + 1 concentration (normalised by 6 M)
   = 66 corrosion features
 
-Model: RandomForestRegressor (n_estimators=300, n_jobs=-1)
-       Same architecture as existing mechanical models for consistency.
+Model: RandomForestRegressor (n_estimators=100, max_depth=10, n_jobs=-1)
+       Depth-limited to keep model files ~20 MB each (deployable on Streamlit).
+       R² trade-off vs unlimited depth is minimal with 200k training rows.
 
 Evaluation: 10-run average R² with random train/test splits (80/20).
 
@@ -55,7 +56,8 @@ warnings.filterwarnings('ignore')
 PROCESSED_FILE = "Updated_MPEAs_Mech_CorrGAN_DB_processed.xlsx"
 OUT_DIR_A      = "models_corr_A"
 OUT_DIR_B      = "models_corr_B"
-N_ESTIMATORS   = 300
+N_ESTIMATORS   = 100
+MAX_DEPTH      = 10      # limits tree depth → keeps model files ~20 MB each
 N_RUNS         = 10      # repeated R² evaluation runs
 TEST_SIZE      = 0.20
 RANDOM_STATE   = 42
@@ -128,6 +130,7 @@ def train_final_model(model_cls, X, y):
 def rf_factory():
     return RandomForestRegressor(
         n_estimators=N_ESTIMATORS,
+        max_depth=MAX_DEPTH,
         n_jobs=-1,
         random_state=RANDOM_STATE
     )
